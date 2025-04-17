@@ -61,6 +61,8 @@ const createProduct = asyncHandler(async (req, res) => {
         }
     }
 
+    const parsedSpecs = req.body.specs ? JSON.parse(req.body.specs) : {};
+
     const newProduct = new Product({
         title,
         description,
@@ -68,7 +70,7 @@ const createProduct = asyncHandler(async (req, res) => {
         category,
         thumbnail: thumbnailCloudinaryResponse?.url || null,
         images: imagesCloudinaryResponses,
-        specs,
+        specs: parsedSpecs,
         sold
     });
 

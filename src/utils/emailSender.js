@@ -1,5 +1,10 @@
 import nodemailer from 'nodemailer';
-
+import dotenv from "dotenv"
+dotenv.config(
+    {
+        path: "./.env"
+    }
+);
 
 
 console.log("nodemailer user email", process.env.NODEMAILER_USER_EMAIL)

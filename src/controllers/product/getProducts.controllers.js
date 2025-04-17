@@ -1,4 +1,5 @@
 import { Product } from "../../models/product.model.js";
+import { ApiResponse } from "../../utils/apiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 
 const getAllProducts = asyncHandler(async (req, res) => {
