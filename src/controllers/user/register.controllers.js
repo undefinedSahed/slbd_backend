@@ -13,7 +13,7 @@ import { ErrorResponse } from "../../utils/errorResponse.js";
 const createUser = asyncHandler(async (req, res) => {
 
     // Validate request body
-    const { fullname, email, mobile, password, city } = req.body;
+    const { fullname, email, mobile, password, city, role } = req.body;
 
 
     const existingUser = await User.findOne({ email: email });
@@ -32,6 +32,7 @@ const createUser = asyncHandler(async (req, res) => {
         email,
         mobile,
         password: hashPassword,
+        role,
         city
     })
 

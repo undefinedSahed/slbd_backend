@@ -7,9 +7,6 @@ dotenv.config(
 );
 
 
-console.log("nodemailer user email", process.env.NODEMAILER_USER_EMAIL)
-
-
 const emailSender = async (email, emailTemplate) => {
     // Create a transporter object using the SMTP transporter
     const transporter = nodemailer.createTransport(

@@ -42,7 +42,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // Generate JWT token
     const accessToken = jwt.sign(
-        { id: user._id, email: user.email },
+        { id: user._id, email: user.email, role: user.role },
         process.env.JWT_SECRET_KEY,
         { expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRY }
     );

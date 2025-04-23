@@ -1,22 +1,27 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import { Product } from "../../models/product.model.js"
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { Cart } from "../../models/cart.model.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 
 const addToCart = asyncHandler(async (req, res) => {
 
-    // Validate request body
-    const { user_id, product_id, quantity } = req.body;
+    const { user_id, role } = req.user;
 
-    // Check if product exists and user has sufficient quantity to add to cart
-    const product = await Product.findById(product_id);
-    if (!product) {
-        new ErrorResponse(404, "Product not found");
+    if (!user_id && role == "user") {
+        return res.status(400).json(
+            new ErrorResponse(400, "User ID not found")
+        );
     }
 
-    // Check the cart is already exist 
-    let cart = await Cart.findOne({ user_id: user_id });
+    const { product_id, quantity } = req.body;
+
+
+    let cart = await Cart.findOne({ user_id: user_id }).populate({
+        path: "items.product_id",
+        populate: {
+            path: "category",
+        },
+    });
 
     if (!cart) {
         cart = new Cart({

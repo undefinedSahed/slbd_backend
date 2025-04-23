@@ -1,18 +1,25 @@
-// controllers/product/createProduct.controllers.js
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { Product } from "../../models/product.model.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
-import fs from "fs"; // Import the fs module
+import fs from "fs";
+import { Category } from "../../models/category.model.js";
 
 const createProduct = asyncHandler(async (req, res) => {
-    // Validate request body
+
+    const { role } = req.user;
+
     const { title, description, price, category, specs, sold } = req.body;
 
-    // Check if category with the same title already exists
-    const existingProduct = await Product.findOne({ title });
 
+    if (!(role == "admin")) {
+        return res.status(400).json(
+            new ErrorResponse(400, "You are not authorized to create product")
+        )
+    }
+
+    const existingProduct = await Product.findOne({ title });
     if (existingProduct) {
         return res.status(400).json(
             new ErrorResponse(400, "Product with the same title already exists")
@@ -35,7 +42,7 @@ const createProduct = asyncHandler(async (req, res) => {
     // Upload thumbnail to Cloudinary
     if (thumbnailLocalPath) {
         thumbnailCloudinaryResponse = await uploadOnCloudinary(thumbnailLocalPath);
-         // Remove local file after upload
+        // Remove local file after upload
         if (!thumbnailCloudinaryResponse) {
             return res.status(500).json(
                 new ErrorResponse(500, "Failed to upload thumbnail to Cloudinary")
@@ -51,8 +58,7 @@ const createProduct = asyncHandler(async (req, res) => {
             if (imageCloudinaryResponse) {
                 imagesCloudinaryResponses.push(imageCloudinaryResponse.url);
             } else {
-                // If one image upload fails, you might want to handle this differently
-                // (e.g., rollback already uploaded images, return an error)
+                // Handle the error:  Consider rolling back already uploaded images
                 console.error("Failed to upload one of the images to Cloudinary");
                 return res.status(500).json(
                     new ErrorResponse(500, "Failed to upload one or more images to Cloudinary")
@@ -61,7 +67,7 @@ const createProduct = asyncHandler(async (req, res) => {
         }
     }
 
-    const parsedSpecs = req.body.specs ? JSON.parse(req.body.specs) : {};
+    const parsedSpecs = specs ? JSON.parse(specs) : {};
 
     const newProduct = new Product({
         title,
@@ -74,8 +80,22 @@ const createProduct = asyncHandler(async (req, res) => {
         sold
     });
 
-    // Save the new product to the database and return the created product as a response
+    // Save the new product to the database 
     const createdProduct = await newProduct.save();
+
+    // Update the category.  This is the corrected part
+    const updatedCategory = await Category.findByIdAndUpdate(
+        category,
+        { $push: { products: createdProduct._id } }, // Push the *ID* of the new product
+        { new: true }
+    );
+
+    // If category not found
+    if (!updatedCategory) {
+        return res.status(400).json(
+            new ErrorResponse(400, "Category not found")
+        );
+    }
 
     res.status(201).json(
         new ApiResponse(201, "Product created successfully", createdProduct)
