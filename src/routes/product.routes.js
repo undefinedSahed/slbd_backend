@@ -4,6 +4,7 @@ import createProduct from "../controllers/product/createProduct.controllers.js";
 import getAllProducts from "../controllers/product/getProducts.controllers.js";
 import { upload } from "../middlewares/multer.middleware.js"; // Assuming your multer middleware is in this path
 import { authenticateUser } from "../middlewares/auth.middlewares.js";
+import { getPopularProducts } from "../controllers/product/getPopularProduct.js";
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.post("/createproduct", authenticateUser, upload.fields([
 
 // Get all products
 router.get("/", getAllProducts);
+router.get("/popular", getPopularProducts);
 
 export default router;

@@ -1,10 +1,10 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { Product } from "../../models/product.model.js";
+import { Category } from "../../models/category.model.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import fs from "fs";
-import { Category } from "../../models/category.model.js";
 
 const createProduct = asyncHandler(async (req, res) => {
 
@@ -18,6 +18,16 @@ const createProduct = asyncHandler(async (req, res) => {
             new ErrorResponse(400, "You are not authorized to create product")
         )
     }
+
+
+    // Check if category exist
+    const isCategoryExist = await Category.findById(category);
+    if (!isCategoryExist) {
+        return res.status(400).json(
+            new ErrorResponse(400, "Category not found")
+        );
+    }
+
 
     const existingProduct = await Product.findOne({ title });
     if (existingProduct) {

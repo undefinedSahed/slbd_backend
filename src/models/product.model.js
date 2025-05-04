@@ -24,7 +24,7 @@ const productSchema = new Schema(
         },
         thumbnail: {
             type: String,
-            default: "/default.webp"
+            required: [true, "Product thumbnail is required"]
         },
         images: [String],
         specs: {

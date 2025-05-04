@@ -17,7 +17,7 @@ const categorySchema = new Schema(
         },        
         image: {
             type: String,
-            default: "/default.webp"
+            required: [true, "Category image is required"]
         },
         products: {
             type: [
