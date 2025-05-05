@@ -37,7 +37,7 @@ const productSchema = new Schema(
             numberOfSMDModules: [{ type: Number }],
             inputCurrentVariation: { type: String },
             driver: { type: String },
-            powerFactor: {type: Number},
+            powerFactor: { type: Number },
             beamAngle: { type: String },
             CRI: { type: String },
             THD: { type: String },
@@ -56,6 +56,10 @@ const productSchema = new Schema(
             default: "in stock",
             required: [true, "Product stock is required"],
             min: 0
+        },
+        featurened: {
+            type: Boolean,
+            default: false
         },
         sold: {
             type: Number,
