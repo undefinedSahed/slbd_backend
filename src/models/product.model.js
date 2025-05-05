@@ -57,7 +57,7 @@ const productSchema = new Schema(
             required: [true, "Product stock is required"],
             min: 0
         },
-        featurened: {
+        featured: {
             type: Boolean,
             default: false
         },
