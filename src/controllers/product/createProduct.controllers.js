@@ -52,6 +52,7 @@ const createProduct = asyncHandler(async (req, res) => {
     // Upload thumbnail to Cloudinary
     if (thumbnailLocalPath) {
         thumbnailCloudinaryResponse = await uploadOnCloudinary(thumbnailLocalPath);
+        fs.unlinkSync(thumbnailLocalPath);
         // Remove local file after upload
         if (!thumbnailCloudinaryResponse) {
             return res.status(500).json(
