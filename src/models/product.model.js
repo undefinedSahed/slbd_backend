@@ -54,6 +54,10 @@ const productSchema = new Schema(
             storageTemperature: { type: String },
             warranty: [{ type: String }]
         },
+        rating: {
+            type: Number,
+            default: 3
+        },
         stock: {
             type: String,
             enum: ["in stock", "out of stock"],
@@ -69,6 +73,10 @@ const productSchema = new Schema(
             type: Number,
             default: 0
         },
+        rating: {
+            type: Number,
+            default: 0
+        }
     },
     { timestamps: true }
 )
