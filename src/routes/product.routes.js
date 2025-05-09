@@ -7,6 +7,7 @@ import { authenticateUser } from "../middlewares/auth.middlewares.js";
 import { getPopularProducts } from "../controllers/product/getPopularProduct.js";
 import { getFeaturedProducts } from "../controllers/product/get-featured-product.js";
 import { getSingleProduct } from "../controllers/product/get-single-product.js";
+import { getRelatedProducts } from "../controllers/product/get-related-products.js";
 
 const router = Router();
 
@@ -20,7 +21,8 @@ router.post("/createproduct", authenticateUser, upload.fields([
 router.get("/", getAllProducts);
 router.get("/popular", getPopularProducts);
 router.get("/featured", getFeaturedProducts);
-router.get("/:id", getSingleProduct);
+router.get("/:title", getSingleProduct);
+router.get("/related-products/:category", getRelatedProducts)
 
 
 export default router;
