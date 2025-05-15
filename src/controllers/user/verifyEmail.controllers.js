@@ -6,7 +6,7 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 
 
 const verifyEmail = asyncHandler(async (req, res) => {
-    
+
     const { authorization } = req.headers;
 
     // Notify the user that token has not been provided

@@ -16,7 +16,7 @@ const emailTemplate = (token) => {
             </p>
 
             <!-- Verification Button -->
-            <a href="https://superlightingbd.com/register/verify-email?token=${token}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 12px 30px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 5px; margin-top: 20px;">
+            <a href="http://localhost:3000/signup/verify-email?token=${token}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 12px 30px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 5px; margin-top: 20px;">
                 Verify Email
             </a>
 

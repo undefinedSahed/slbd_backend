@@ -24,6 +24,14 @@ const createUser = asyncHandler(async (req, res) => {
         )
     }
 
+    const existingUserMobile = await User.findOne({ mobile: mobile });
+
+    if (existingUserMobile) {
+        return res.status(401).json(
+            new ErrorResponse(400, { message: "Mobile number already exists" })
+        )
+    }
+
 
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -39,7 +47,7 @@ const createUser = asyncHandler(async (req, res) => {
     const savedUser = await user.save();
 
     const token = jwt.sign(
-        { id:savedUser._id, email: savedUser.email },
+        { id: savedUser._id, email: savedUser.email },
         process.env.JWT_SECRET_KEY,
         { expiresIn: `${process.env.JWT_EMAIL_VERIFY_EXPIRY}` });
 
