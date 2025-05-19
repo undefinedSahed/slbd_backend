@@ -52,7 +52,7 @@ const loginUser = asyncHandler(async (req, res) => {
         new ApiResponse(200, "Login successful", {
             id: user._id,
             email: user.email,
-            fullname: `${user.firstname} ${user.lastname}`,
+            fullname: user.fullname,
             role: user.role,
             accessToken
         })
