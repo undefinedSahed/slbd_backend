@@ -28,6 +28,7 @@ import CategoryRoute from "./routes/category.routes.js";
 import ProductRoute from "./routes/product.routes.js";
 import CartRoute from "./routes/cart.routes.js"
 import BlogRoute from "./routes/blog.routes.js";
+import CheckoutRoute from "./routes/order.routes.js";
 
 // Routes
 app.use("/api/v1/users", UserRoute);
@@ -35,6 +36,7 @@ app.use("/api/v1/categories", CategoryRoute);
 app.use("/api/v1/products", ProductRoute);
 app.use("/api/v1/cart", CartRoute);
 app.use("/api/v1/blogs", BlogRoute);
+app.use("/api/v1/checkout", CheckoutRoute)
 
 
 export { app };

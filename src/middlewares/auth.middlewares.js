@@ -15,16 +15,16 @@ export const authenticateUser = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
-        const { id: user_id, role } = decoded;
+        const { id: user_id, role, email } = decoded;
 
-        if (!user_id && role == "user") {
+        if (!user_id) {
             return res.status(400).json(
                 new ErrorResponse(400, "User ID not found in token")
             );
         }
 
 
-        req.user = { user_id, role };
+        req.user = { user_id, role, email };
         next(); 
 
     } catch (error) {

@@ -6,6 +6,7 @@ import { ApiResponse } from "../../utils/apiResponse.js";
 const addToCart = asyncHandler(async (req, res) => {
 
     const { user_id, role } = req.user;
+    const { product_id, quantity } = req.body;
 
     if (!user_id && role == "user") {
         return res.status(400).json(
@@ -13,7 +14,6 @@ const addToCart = asyncHandler(async (req, res) => {
         );
     }
 
-    const { product_id, quantity } = req.body;
 
 
     let cart = await Cart.findOne({ user_id: user_id }).populate({
@@ -29,12 +29,17 @@ const addToCart = asyncHandler(async (req, res) => {
             items: [{ product_id: product_id, quantity }]
         });
     } else {
+
         const itemIndex = cart.items.findIndex(
-            (item) => item.product_id.toString() === product_id
+            (item) => item.product_id._id.toString() === product_id.toString()
         );
 
-        if (itemIndex > -1) {
+
+        if (itemIndex !== -1) {
             cart.items[itemIndex].quantity += quantity;
+            res.status(200).json(
+                new ApiResponse(200, "Product is already in cart", cart)
+            );
         } else {
             cart.items.push({ product_id: product_id, quantity });
         }
