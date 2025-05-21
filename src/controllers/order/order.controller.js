@@ -42,8 +42,6 @@ const processCheckout = asyncHandler(async (req, res) => {
         };
     });
 
-    console.log(items);
-
     const order = new Order({
         user: user_id,
         items: orderItems,
