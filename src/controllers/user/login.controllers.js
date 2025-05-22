@@ -54,6 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
             email: user.email,
             fullname: user.fullname,
             role: user.role,
+            city: user.city,
             accessToken
         })
     );
