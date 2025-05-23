@@ -36,7 +36,7 @@ app.use("/api/v1/categories", CategoryRoute);
 app.use("/api/v1/products", ProductRoute);
 app.use("/api/v1/cart", CartRoute);
 app.use("/api/v1/blogs", BlogRoute);
-app.use("/api/v1/checkout", CheckoutRoute)
+app.use("/api/v1/orders", CheckoutRoute)
 
 
 export { app };

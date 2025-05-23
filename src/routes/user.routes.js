@@ -7,6 +7,7 @@ import { authenticateUser } from "../middlewares/auth.middlewares.js";
 import getUserProfile from "../controllers/user/getUserProfile.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { updateUserProfile } from "../controllers/user/updateProfile.js";
+import { changePassword } from "../controllers/user/changePassword.js";
 
 
 const router = Router();
@@ -32,5 +33,8 @@ router.get("/profile", authenticateUser, getUserProfile)
 
 // Update Profile
 router.put("/profile/update", authenticateUser, upload.single("avatar"), updateUserProfile);
+
+// Change Password
+router.put("/password/change", authenticateUser, changePassword)
 
 export default router;

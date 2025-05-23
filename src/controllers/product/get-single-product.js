@@ -4,6 +4,7 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 
 export const getSingleProduct = asyncHandler(async (req, res) => {
+
     const { title } = req.params;
 
     const product = await Product.findOne({ title }).populate("category", "title").lean();
