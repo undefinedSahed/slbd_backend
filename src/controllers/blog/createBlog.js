@@ -3,7 +3,6 @@ import { ApiResponse } from "../../utils/apiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
-import fs from "fs";
 
 
 export const createBlog = asyncHandler(async (req, res) => {
@@ -41,7 +40,6 @@ export const createBlog = asyncHandler(async (req, res) => {
     let imageCloudinaryResponse;
     if (imageLocalPath) {
         imageCloudinaryResponse = await uploadOnCloudinary(imageLocalPath);
-        fs.unlinkSync(imageLocalPath);
         if (!imageCloudinaryResponse) {
             return res.status(500).json(
                 new ErrorResponse(500, "Failed to upload image to Cloudinary")

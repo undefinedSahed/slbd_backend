@@ -4,7 +4,6 @@ import { Category } from "../../models/category.model.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
-import fs from "fs";
 
 const createProduct = asyncHandler(async (req, res) => {
 
@@ -52,7 +51,6 @@ const createProduct = asyncHandler(async (req, res) => {
     // Upload thumbnail to Cloudinary
     if (thumbnailLocalPath) {
         thumbnailCloudinaryResponse = await uploadOnCloudinary(thumbnailLocalPath);
-        fs.unlinkSync(thumbnailLocalPath);
         // Remove local file after upload
         if (!thumbnailCloudinaryResponse) {
             return res.status(500).json(
@@ -65,7 +63,6 @@ const createProduct = asyncHandler(async (req, res) => {
     if (imagesLocalPaths && imagesLocalPaths.length > 0) {
         for (const imageLocalPath of imagesLocalPaths) {
             const imageCloudinaryResponse = await uploadOnCloudinary(imageLocalPath);
-            fs.unlinkSync(imageLocalPath); // Remove local file after upload
             if (imageCloudinaryResponse) {
                 imagesCloudinaryResponses.push(imageCloudinaryResponse.url);
             } else {

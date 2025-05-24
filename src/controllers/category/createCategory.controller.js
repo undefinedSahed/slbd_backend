@@ -3,7 +3,6 @@ import { Category } from "../../models/category.model.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
-import fs from "fs";
 
 const createCategory = asyncHandler(async (req, res) => {
     const { role } = req.user;
@@ -26,7 +25,6 @@ const createCategory = asyncHandler(async (req, res) => {
     }
 
     const imageCloud = await uploadOnCloudinary(imagePath);
-    fs.unlinkSync(imagePath); // Remove local file
 
     if (!imageCloud?.url) {
         return res.status(500).json(new ErrorResponse(500, "Image upload failed"));
