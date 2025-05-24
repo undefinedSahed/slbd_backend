@@ -10,7 +10,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 
     const user = await User.findById(user_id);
     if (!user) {
-        throw new ErrorResponse("User not found", 404);
+        new ErrorResponse("User not found", 404);
     }
 
     const { fullname, mobile, city } = req.body;
@@ -25,7 +25,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
         const uploadedImage = await uploadOnCloudinary(localPath);
 
         if (!uploadedImage?.secure_url) {
-            throw new ErrorResponse("Image upload failed", 500);
+            new ErrorResponse("Image upload failed", 500);
         }
 
         user.avatar = uploadedImage.secure_url;

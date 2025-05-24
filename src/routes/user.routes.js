@@ -8,6 +8,8 @@ import getUserProfile from "../controllers/user/getUserProfile.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { updateUserProfile } from "../controllers/user/updateProfile.js";
 import { changePassword } from "../controllers/user/changePassword.js";
+import { forgotPassword } from "../controllers/user/forgotPassword.controller.js";
+import { resetPassword } from "../controllers/user/resetPassword.controller.js";
 
 
 const router = Router();
@@ -36,5 +38,11 @@ router.put("/profile/update", authenticateUser, upload.single("avatar"), updateU
 
 // Change Password
 router.put("/password/change", authenticateUser, changePassword)
+
+// Forgot password
+router.post("/forgot-password", forgotPassword)
+
+// Reset Password
+router.post("/reset-password", resetPassword)
 
 export default router;
