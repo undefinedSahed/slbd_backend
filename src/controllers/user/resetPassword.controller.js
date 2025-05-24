@@ -16,9 +16,6 @@ export const resetPassword = asyncHandler(async (req, res) => {
         new ErrorResponse(400, { message: "Token and new password are required" });
     }
 
-
-    console.log(token)
-
     // Verify token
     let decoded;
     try {
@@ -26,8 +23,6 @@ export const resetPassword = asyncHandler(async (req, res) => {
     } catch (err) {
         new ErrorResponse(401, { message: "Invalid or expired token" });
     }
-
-    console.log(decoded)
 
     const user = await User.findById(decoded.id);
     if (!user) {

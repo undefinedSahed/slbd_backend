@@ -1,6 +1,21 @@
-const resetPasswordTemplate = (resetURL) => {
-    return `
-    <div style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
+import nodemailer from 'nodemailer';
+import dotenv from "dotenv";
+dotenv.config({ path: "./.env" });
+
+const sendResetPasswordEmail = async (email, resetURL) => {
+    try {
+        // Create a transporter object using the SMTP transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.NODEMAILER_USER_EMAIL,
+                pass: process.env.NODEMAILER_APP_PASSWORD
+            }
+        });
+
+        const resetEmailTemplate = (resetURL) => {
+            return `
+                <div style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
         <div style="max-width: 600px; background: #fff; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1);">
             
             <!-- Logo -->
@@ -24,6 +39,19 @@ const resetPasswordTemplate = (resetURL) => {
             </div>
         </div>
     </div>`;
+        };
+
+        const sendEmail = await transporter.sendMail({
+            from: process.env.NODEMAILER_USER_EMAIL, // Use your email from .env
+            to: email,
+            subject: "Super Lighting BD - Reset Password",
+            html: resetEmailTemplate(resetURL),
+        });
+        return sendEmail;
+
+    } catch (error) {
+        throw error;
+    }
 };
 
-export default resetPasswordTemplate;
+export default sendResetPasswordEmail;

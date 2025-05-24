@@ -58,7 +58,6 @@ const sendOrderConfirmationEmail = async (email, orderDetails) => {
             html: orderConfirmationTemplate(orderDetails)
         });
 
-        console.log('Order confirmation email sent successfully:', sendEmail.messageId);
         return sendEmail;
 
     } catch (error) {

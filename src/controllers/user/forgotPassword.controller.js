@@ -4,8 +4,7 @@ import { User } from "../../models/user.model.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
-import emailSender from "../../utils/emailSender.js";
-import resetPasswordTemplate from "../../utils/resetPasswordTemplate.js";
+import sendResetPasswordEmail from "../../utils/resetPasswordEmail.js";
 
 export const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
@@ -30,7 +29,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     const resetURL = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
 
     // Send email with reset URL
-    await emailSender(email, resetPasswordTemplate(resetURL));
+    await sendResetPasswordEmail(email, resetURL);
 
     res.status(200).json(
         new ApiResponse(200, "Reset password link sent to email", { emailSent: true })
