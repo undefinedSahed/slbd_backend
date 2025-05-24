@@ -1,4 +1,4 @@
-const emailTemplate = (token) => {
+const emailTemplate = (token, frontendURL) => {
     return `
     <div style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
         <div style="max-width: 600px; background: #fff; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1);">
@@ -16,7 +16,7 @@ const emailTemplate = (token) => {
             </p>
 
             <!-- Verification Button -->
-            <a href="http://localhost:3000/signup/verify-email?token=${token}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 12px 30px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 5px; margin-top: 20px;">
+            <a href="${frontendURL}/signup/verify-email?token=${token}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 12px 30px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 5px; margin-top: 20px;">
                 Verify Email
             </a>
 

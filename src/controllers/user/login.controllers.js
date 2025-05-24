@@ -20,7 +20,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: email });
     if (!user) {
         return res.status(401).json(
-            new ErrorResponse(401, "User is not registered") 
+            new ErrorResponse(401, "User is not registered")
         );
     }
 

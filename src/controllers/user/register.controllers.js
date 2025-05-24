@@ -52,7 +52,7 @@ const createUser = asyncHandler(async (req, res) => {
         { expiresIn: `${process.env.JWT_EMAIL_VERIFY_EXPIRY}` });
 
     // send the token and email to email sender utils
-    emailSender(email, emailTemplate(token));
+    emailSender(email, emailTemplate(token, process.env.FRONTEND_URL));
 
     res.status(201).json(
         new ApiResponse(201, "User created successfully", savedUser)

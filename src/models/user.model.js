@@ -39,7 +39,7 @@ const userSchema = new Schema(
         },
         avatar: {
             type: String,
-            default: "default-avatar.jpg" // cloudinary image url
+            default: "" // cloudinary image url
         },
         city: {
             type: String,
