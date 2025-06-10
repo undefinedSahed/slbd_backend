@@ -52,13 +52,8 @@ const orderSchema = new Schema({
     },
     orderStatus: {
         type: String,
-        enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled", "Returned"],
-        default: "Pending"
-    },
-    paymentStatus: {
-        type: String,
-        enum: ["Pending", "Paid", "Failed"],
-        default: "Pending" // For COD, it will remain pending until delivery confirmation
+        enum: ["pending", "processing", "shipped", "delivered", "cancelled", "returned"],
+        default: "pending"
     }
 }, {
     timestamps: true

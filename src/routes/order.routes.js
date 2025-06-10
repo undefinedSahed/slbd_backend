@@ -4,6 +4,7 @@ import getUserOrders from "../controllers/order/getUserOrder.controller.js";
 import getOrderDetails from "../controllers/order/getOrderDetails.controller.js";
 import getAllOrders from "../controllers/order/getAllOrders.controller.js";
 import createOrder from "../controllers/order/createOrder.controller.js";
+import updateOrderStatus from "../controllers/order/updateOrderStatus.controller.js";
 
 
 const router = Router();
@@ -20,6 +21,9 @@ router.get("/all", authenticateUser, getAllOrders)
 // Get specific order details
 router.get("/:orderId", authenticateUser, getOrderDetails)
 
+
+// Update Order Status
+router.post("/update/:orderId", authenticateUser, updateOrderStatus)
 
 
 export default router
