@@ -39,8 +39,8 @@ router.delete("/delete/:id", authenticateUser, deleteProduct)
 router.get("/", getAllProducts);
 router.get("/popular", getPopularProducts);
 router.get("/featured", getFeaturedProducts);
-router.get("/:title", getSingleProduct);
 router.get("/related-products/:category", getRelatedProducts)
+router.get("/:title", getSingleProduct);
 
 
 export default router;

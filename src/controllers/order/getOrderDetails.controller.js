@@ -9,7 +9,7 @@ const getOrderDetails = asyncHandler(async (req, res) => {
     const { orderId } = req.params;
 
     // Find order by ID and populate product info in items
-    const order = await Order.findById(orderId)
+    const order = await Order.findById({ _id: orderId })
         .populate("items.product", "title thumbnail price");
 
     if (!order) {
