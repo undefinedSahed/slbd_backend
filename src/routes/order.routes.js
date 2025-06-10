@@ -19,7 +19,7 @@ router.get("/user", authenticateUser, getUserOrders)
 router.get("/all", authenticateUser, getAllOrders)
 
 // Get specific order details
-router.get("/:orderId", authenticateUser, getOrderDetails)
+router.get("/:orderId", getOrderDetails)
 
 
 // Update Order Status
