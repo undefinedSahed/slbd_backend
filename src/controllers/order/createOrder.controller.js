@@ -40,7 +40,7 @@ const createOrder = asyncHandler(async (req, res) => {
         if (!product) {
             throw new ErrorResponse(400, `Product not found: ${item.product_id}`);
         }
-        const priceAfterDiscount = product.price - (product.discount || 0);
+        const priceAfterDiscount = product.price - (product.price * (product.discount || 0) / 100);
         return {
             product: item.product_id,
             quantity: item.quantity,
