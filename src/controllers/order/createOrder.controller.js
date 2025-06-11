@@ -60,7 +60,7 @@ const createOrder = asyncHandler(async (req, res) => {
         totalAmount,
         deliveryCharge,
         totalPayable,
-        orderStatus: "Pending",
+        orderStatus: "pending",
     });
 
     const savedOrder = await order.save();
