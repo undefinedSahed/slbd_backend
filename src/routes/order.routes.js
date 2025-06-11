@@ -23,7 +23,7 @@ router.get("/:orderId", getOrderDetails)
 
 
 // Update Order Status
-router.post("/update/:orderId", authenticateUser, updateOrderStatus)
+router.put("/update/:orderId", authenticateUser, updateOrderStatus)
 
 
 export default router
