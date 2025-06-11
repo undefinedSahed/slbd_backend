@@ -38,7 +38,7 @@ const addToCart = asyncHandler(async (req, res) => {
                 new ApiResponse(200, "Product is already in cart", cart)
             );
         } else {
-            cart.items.push({ product_id: product_id, quantity });
+            cart.items.unshift({ product_id: product_id, quantity });
         }
     }
 

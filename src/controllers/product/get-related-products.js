@@ -1,11 +1,11 @@
 import { Product } from "../../models/product.model.js";
-import { Category } from "../../models/category.model.js"; // ✅ assuming you have this model
+import { Category } from "../../models/category.model.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 
 export const getRelatedProducts = asyncHandler(async (req, res) => {
-    const { category } = req.params;
+    const { category, productId } = req.params;
 
     // Step 1: Find the category by its title
     const categoryDoc = await Category.findOne({ title: category });
@@ -16,8 +16,11 @@ export const getRelatedProducts = asyncHandler(async (req, res) => {
         );
     }
 
-    // Step 2: Find products by category ObjectId
-    const relatedProducts = await Product.find({ category: categoryDoc._id });
+    // Step 2: Find related products by category, excluding the product with the given ID
+    const relatedProducts = await Product.find({
+        category: categoryDoc._id,
+        _id: { $ne: productId }  // Exclude the current product
+    });
 
     if (!relatedProducts || relatedProducts.length === 0) {
         return res.status(404).json(

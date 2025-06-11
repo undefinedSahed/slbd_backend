@@ -21,12 +21,14 @@ const getCart = asyncHandler(async (req, res) => {
         );
     }
 
-    const populatedCart = await Cart.findOne({ user_id }).populate({
-        path: "items.product_id",
-        populate: {
-            path: "category",
-        },
-    });
+    const populatedCart = await Cart.findOne({ user_id })
+        .populate({
+            path: "items.product_id",
+            populate: {
+                path: "category",
+                model: "Category" // ✅ optional if not already inferred
+            }
+        });
 
     res.status(200).json(
         new ApiResponse(200, "Cart fetched successfully", populatedCart)

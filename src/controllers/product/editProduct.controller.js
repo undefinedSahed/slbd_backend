@@ -1,50 +1,107 @@
+import { Product } from "../../models/product.model.js";
 import { Category } from "../../models/category.model.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ErrorResponse } from "../../utils/errorResponse.js";
 import { ApiResponse } from "../../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
-const editCategory = asyncHandler(async (req, res) => {
+const editProduct = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { role } = req.user;
-    const { title, description } = req.body;
 
+    // Authorization
     if (role !== "admin") {
-        return res.status(403).json(
-            new ErrorResponse(403, "You are not authorized to perform this action")
-        );
+        return res.status(403).json(new ErrorResponse(403, "Not authorized"));
     }
 
-    const category = await Category.findById(id);
-    if (!category) {
-        return res.status(404).json(new ErrorResponse(404, "Category not found"));
+    const product = await Product.findById(id);
+    if (!product) {
+        return res.status(404).json(new ErrorResponse(404, "Product not found"));
     }
 
-    let imageUrl = category.image;
+    // Destructure fields from body
+    const {
+        title,
+        description,
+        price,
+        discount,
+        category,
+        specs,
+        stock,
+        featured,
+        sold,
+    } = req.body;
 
-    if (req.file) {
-        // Upload new image to Cloudinary
-        const uploadResponse = await uploadOnCloudinary(req.file.path);
-        if (!uploadResponse) {
-            return res.status(500).json(
-                new ErrorResponse(500, "Failed to upload new category image")
-            );
+    // Category change handling
+    if (category && category !== String(product.category)) {
+        const newCat = await Category.findById(category);
+        if (!newCat) {
+            return res
+                .status(400)
+                .json(new ErrorResponse(400, "Provided category does not exist"));
         }
-        imageUrl = uploadResponse.url;
+
+        await Category.findByIdAndUpdate(product.category, {
+            $pull: { products: product._id },
+        });
+        await Category.findByIdAndUpdate(category, {
+            $push: { products: product._id },
+        });
+
+        product.category = category;
     }
 
-    // Update category fields
-    category.title = title || category.title;
-    category.description = description || category.description;
-    category.image = imageUrl;
+    // Thumbnail upload
+    if (req.files?.thumbnail?.[0]) {
+        const thumbRes = await uploadOnCloudinary(req.files.thumbnail[0].path);
+        if (!thumbRes?.url) {
+            return res
+                .status(500)
+                .json(new ErrorResponse(500, "Failed to upload thumbnail"));
+        }
+        product.thumbnail = thumbRes.url;
+    }
 
-    console.log(imageUrl)
+    // Images upload
+    if (req.files?.images?.length > 0) {
+        const uploaded = [];
+        for (const file of req.files.images) {
+            const imgRes = await uploadOnCloudinary(file.path);
+            if (imgRes?.url) {
+                uploaded.push(imgRes.url);
+            }
+        }
+        if (uploaded.length === 0) {
+            return res
+                .status(500)
+                .json(new ErrorResponse(500, "Failed to upload images"));
+        }
+        product.images = uploaded;
+    }
 
-    await category.save();
+    // Update other fields
+    product.title = title ?? product.title;
+    product.description = description ?? product.description;
+    product.price = !isNaN(price) ? price : product.price;
+    product.discount = !isNaN(discount) ? discount : product.discount;
+    product.stock = stock ?? product.stock;
+    product.featured = featured != null ? featured === "true" || featured === true : product.featured;
+    product.sold = sold ?? product.sold;
 
-    return res.status(200).json(
-        new ApiResponse(200, "Category updated successfully", category)
-    );
+    if (specs) {
+        try {
+            product.specs = JSON.parse(specs);
+        } catch {
+            return res
+                .status(400)
+                .json(new ErrorResponse(400, "Specs must be valid JSON"));
+        }
+    }
+
+    await product.save();
+    res
+        .status(200)
+        .json(new ApiResponse(200, "Product updated successfully", product));
 });
 
-export default editCategory;
+export default editProduct;

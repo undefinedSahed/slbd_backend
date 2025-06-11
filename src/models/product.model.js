@@ -62,8 +62,7 @@ const productSchema = new Schema(
             type: String,
             enum: ["in stock", "out of stock"],
             default: "in stock",
-            required: [true, "Product stock is required"],
-            min: 0
+            required: [true, "Product stock is required"]
         },
         featured: {
             type: Boolean,
