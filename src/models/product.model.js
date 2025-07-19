@@ -68,6 +68,10 @@ const productSchema = new Schema(
             type: Boolean,
             default: false
         },
+        topSold: {
+            type: Boolean,
+            default: false
+        },
         sold: {
             type: Number,
             default: 0

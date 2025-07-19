@@ -9,7 +9,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
     const { role } = req.user;
 
-    const { title, description, price, category, specs, sold } = req.body;
+    const { title, description, price, category, specs, sold, topSold } = req.body;
 
 
     if (!(role == "admin")) {
@@ -85,7 +85,8 @@ const createProduct = asyncHandler(async (req, res) => {
         thumbnail: thumbnailCloudinaryResponse?.url || null,
         images: imagesCloudinaryResponses,
         specs: parsedSpecs,
-        sold
+        sold,
+        topSold
     });
 
     // Save the new product to the database 

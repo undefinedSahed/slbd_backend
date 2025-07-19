@@ -30,7 +30,7 @@ import CartRoute from "./routes/cart.routes.js"
 import BlogRoute from "./routes/blog.routes.js";
 import OrderRoute from "./routes/order.routes.js";
 import adminStatsRoute from "./routes/adminStats.routes.js";
-
+import reviewRoute from "./routes/review.routes.js";
 
 
 // Routes
@@ -41,5 +41,6 @@ app.use("/api/v1/cart", CartRoute);
 app.use("/api/v1/blogs", BlogRoute);
 app.use("/api/v1/orders", OrderRoute)
 app.use("/api/v1/admin", adminStatsRoute)
+app.use("/api/v1/reviews", reviewRoute);
 
 export { app };

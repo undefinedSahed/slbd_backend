@@ -10,6 +10,7 @@ import { getSingleProduct } from "../controllers/product/get-single-product.js";
 import { getRelatedProducts } from "../controllers/product/get-related-products.js";
 import editProduct from "../controllers/product/editProduct.controller.js";
 import deleteProduct from "../controllers/product/deleteProduct.controller.js";
+import { getTopSoldProducts } from "../controllers/product/topSoldProduct.controller.js";
 
 const router = Router();
 
@@ -39,6 +40,7 @@ router.delete("/delete/:id", authenticateUser, deleteProduct)
 router.get("/", getAllProducts);
 router.get("/popular", getPopularProducts);
 router.get("/featured", getFeaturedProducts);
+router.get("/topsold", getTopSoldProducts);
 router.get("/related-products/:category/:productId", getRelatedProducts)
 router.get("/:title", getSingleProduct);
 

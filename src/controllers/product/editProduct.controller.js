@@ -30,6 +30,7 @@ const editProduct = asyncHandler(async (req, res) => {
         stock,
         featured,
         sold,
+        topSold
     } = req.body;
 
     // Category change handling
@@ -87,6 +88,7 @@ const editProduct = asyncHandler(async (req, res) => {
     product.stock = stock ?? product.stock;
     product.featured = featured != null ? featured === "true" || featured === true : product.featured;
     product.sold = sold ?? product.sold;
+    product.topSold = topSold ?? product.topSold;
 
     if (specs) {
         try {
