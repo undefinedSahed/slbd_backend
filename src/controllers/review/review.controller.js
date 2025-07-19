@@ -37,6 +37,7 @@ const getReviews = asyncHandler(async (req, res) => {
     const { productId } = req.params;
 
     const reviews = await Review.find({ product: productId })
+        .sort({ createdAt: -1 })
         .populate("user", "fullname avatar");
 
     res.status(200).json(new ApiResponse(200, "Reviews fetched successfully", reviews));
