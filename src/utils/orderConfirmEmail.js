@@ -18,8 +18,6 @@ const sendOrderConfirmationEmail = async (email, orderDetails) => {
                 <div style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
                     <div style="max-width: 600px; background: #fff; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1);">
 
-                        <img src="https://res.cloudinary.com/sahed/image/upload/v1747864959/logo_ywp8d9.png" alt="SLBD Logo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #9e9eec; margin-bottom: 20px;">
-
                         <h2 style="color: #333; font-weight: 700; font-size: 24px; margin-bottom: 20px;">Order Confirmation</h2>
 
                         <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">
