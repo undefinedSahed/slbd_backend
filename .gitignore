@@ -9,14 +9,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
-.env.* 
 
 # OS-specific files
 .DS_Store
 Thumbs.db
 
 # Debug & IDE folders
-.vscode/
 .idea/
 
 # Build outputs
@@ -33,7 +31,7 @@ coverage/
 pids
 
 # dotenv-expand backup files
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
+config.bat
